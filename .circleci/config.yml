@@ -50,7 +50,6 @@ jobs:
             - .
 
   # デプロイ
-  # deploy-masterはCloudFlontのDistribution IDについても適切に変更してください
   deploy-master:
     executor: deploy
     steps:
