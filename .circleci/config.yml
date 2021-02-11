@@ -1,28 +1,79 @@
 version: 2.1
-jobs:
-  build:
+
+executors:
+  default:
     docker:
       - image: circleci/node:10.11.0-browsers
-    working_directory: ~/index-indicators-front
+    working_directory: ~/genkan-example
+  deploy:
+    docker:
+      - image: circleci/python:3.6.5
 
+commands:
+  yarn_install:
     steps:
-      - checkout
-      # Download and cache dependencies
       - restore_cache:
+          name: Restore yarn cache
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: yarn install
+            - v1-npm-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: yarn install
+          command: yarn install
       - save_cache:
+          name: Save yarn cache
+          key: v1-npm-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      # run tests
-      - run: yarn test
-      - run: sudo apt-get update && sudo apt-get install -y python-dev
-      - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
-      - run: sudo python get-pip.py
-      - run: sudo pip install awscli --upgrade
-      - run: aws --version
-      - run: aws s3 ls
-      - run: yarn run deploy
+  yarn_build:
+    steps:
+      - run: yarn build
+  install_awscli:
+    steps:
+      - run: sudo pip install awscli
+
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+
+  # ビルド
+  build-master:
+    executor: default
+    steps:
+      - checkout
+      - yarn_install
+      - yarn_build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  # デプロイ
+  # deploy-masterはCloudFlontのDistribution IDについても適切に変更してください
+  deploy-master:
+    executor: deploy
+    steps:
+      - attach_workspace:
+          at: .
+      - install_awscli
+      - run:
+          name: Deploy
+          command: aws s3 sync build/ s3://index-indicators --delete
+      - run:
+          name: Update cloudFront
+          command: aws cloudfront create-invalidation --distribution-id E13NNUL5XF1W5D --paths "/*"
+
+workflows:
+  deploy:
+    jobs:
+      # masterブランチ
+      - build-master:
+          filters: &master-filters
+            branches:
+              only: master
+      - deploy-master:
+          requires:
+            - build-master
+          filters:
+            <<: *master-filters
