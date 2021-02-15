@@ -68,7 +68,7 @@ export const signIn = (email, password) => {
 
 // axios.jsのインスタンスを使った時エラーが出る為一時的に別のインスタンスを生成する。 TODO axios.jsと統合
 const httpClientSingle = axios.create({
-    baseURL: process.env.NODE_ENV === 'build' ? 'https://api.index-indicators.com' : 'http://localhost:8080',
+    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.index-indicators.com' : 'http://localhost:8080',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
