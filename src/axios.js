@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const httpClient = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: process.env.NODE_ENV === 'build' ? 'https://api.index-indicators.com' : 'http://localhost:8080',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
