@@ -12,12 +12,17 @@ export default function createStore(history) {
         diff: true,
     });
 
+    const middleWare = [routerMiddleware(history), thunk];
+    if (process.env.NODE_ENV !== 'production') {
+        middleWare.push(logger);
+    }
+
     return reduxCreateStore(
         combineReducers({
             router: connectRouter(history),
             users: UsersReducer,
             uiState: UiStateReducer,
         }),
-        applyMiddleware(process.env.NODE_ENV !== 'production' && logger, routerMiddleware(history), thunk)
+        applyMiddleware(...middleWare)
     );
 }
