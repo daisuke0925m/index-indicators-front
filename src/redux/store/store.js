@@ -18,6 +18,6 @@ export default function createStore(history) {
             users: UsersReducer,
             uiState: UiStateReducer,
         }),
-        applyMiddleware(logger, routerMiddleware(history), thunk)
+        applyMiddleware(process.env.NODE_ENV !== 'production' && logger, routerMiddleware(history), thunk)
     );
 }

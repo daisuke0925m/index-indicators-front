@@ -10,7 +10,6 @@ const Auth = (props) => {
 
     const selector = useSelector((state) => state);
     const isSignedIn = getSignedIn(selector);
-    console.log(isSignedIn);
 
     return <div>{isSignedIn ? props.enableEle : props.disableEle}</div>;
 };
