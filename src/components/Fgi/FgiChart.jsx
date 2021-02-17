@@ -40,7 +40,7 @@ const FgiChart = (props) => {
         series: [
             {
                 type: 'area',
-                data: props.nowValues,
+                data: props.nowValues.reverse(),
                 lineWidth: 0,
                 marker: {
                     enabled: false,
