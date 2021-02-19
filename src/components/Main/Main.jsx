@@ -43,11 +43,7 @@ const Main = () => {
                 >
                     <div>
                         <Auth
-                            enableEle={
-                                <Tooltip title="登録" aria-label="add">
-                                    <LikeSwitch flag={isLikedFgi.isFgi} symbol={'fgi'} likeID={isLikedFgi.id} />
-                                </Tooltip>
-                            }
+                            enableEle={<LikeSwitch flag={isLikedFgi.isFgi} symbol={'fgi'} likeID={isLikedFgi.id} />}
                             disableEle={
                                 <div style={{ textAlign: 'right' }}>
                                     <Tooltip title="ログインユーザーのみ登録できます。" aria-label="add">
@@ -66,9 +62,7 @@ const Main = () => {
                     <div>
                         <Auth
                             enableEle={
-                                <Tooltip title="登録" aria-label="add">
-                                    <LikeSwitch flag={isLikedSkew.isSkew} symbol={'^skew'} likeID={isLikedSkew.id} />
-                                </Tooltip>
+                                <LikeSwitch flag={isLikedSkew.isSkew} symbol={'^skew'} likeID={isLikedSkew.id} />
                             }
                             disableEle={
                                 <div style={{ textAlign: 'right' }}>
