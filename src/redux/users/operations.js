@@ -277,7 +277,6 @@ export const updateUser = (newName, newEmail, newPass, pass, id) => {
                         },
                     })
                 );
-                dispatch(listenAuthState());
             } catch (error) {
                 if (error.response.status == 404 || error.response.status == 400) {
                     dispatch(
@@ -285,7 +284,7 @@ export const updateUser = (newName, newEmail, newPass, pass, id) => {
                             alert: {
                                 isOpen: true,
                                 type: 'error',
-                                message: 'パスワードが一致しません。 もう一度お試し下さい。',
+                                message: 'ユーザー情報の変更に失敗しました。 もう一度お試し下さい。',
                             },
                         })
                     );
