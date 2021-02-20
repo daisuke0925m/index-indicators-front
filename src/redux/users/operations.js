@@ -1,4 +1,3 @@
-import axios from 'axios';
 import httpClient from '../../axios';
 import { alertOpenAction } from '../uiState/actions';
 import { fetchLikesAction, signInAction, signOutAction } from './actions';
@@ -66,22 +65,13 @@ export const signIn = (email, password) => {
     }
 };
 
-// axios.jsのインスタンスを使った時エラーが出る為一時的に別のインスタンスを生成する。 TODO axios.jsと統合
-const httpClientSingle = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.index-indicators.com' : 'http://localhost:8080',
-    withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
 export const listenAuthState = () => {
     return async (dispatch) => {
         try {
-            const res = await httpClientSingle.post('/refresh_token');
+            const res = await httpClient.post('/refresh_token');
             const id = res.data.id;
             try {
-                const res = await httpClientSingle.get(`/users/${id}`);
+                const res = await httpClient.get(`/users/${id}`);
                 const data = res.data;
                 dispatch(
                     signInAction({
@@ -287,7 +277,6 @@ export const updateUser = (newName, newEmail, newPass, pass, id) => {
                         },
                     })
                 );
-                dispatch(listenAuthState());
             } catch (error) {
                 if (error.response.status == 404 || error.response.status == 400) {
                     dispatch(
@@ -295,7 +284,7 @@ export const updateUser = (newName, newEmail, newPass, pass, id) => {
                             alert: {
                                 isOpen: true,
                                 type: 'error',
-                                message: 'パスワードが一致しません。 もう一度お試し下さい。',
+                                message: 'ユーザー情報の変更に失敗しました。 もう一度お試し下さい。',
                             },
                         })
                     );
