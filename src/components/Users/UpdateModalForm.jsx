@@ -97,7 +97,7 @@ const UpdateModalForm = (props) => {
                         <div id="transition-modal-description" style={{ textAlign: 'center' }}>
                             <TextInput
                                 fullWidth={true}
-                                label={'Change User Name'}
+                                label={'New User Name'}
                                 multiline={false}
                                 onChange={inputNewName}
                                 required={false}
@@ -107,7 +107,7 @@ const UpdateModalForm = (props) => {
                             />
                             <TextInput
                                 fullWidth={true}
-                                label={'Change Email'}
+                                label={'New Email'}
                                 multiline={false}
                                 onChange={inputNewEmail}
                                 required={false}
@@ -117,7 +117,7 @@ const UpdateModalForm = (props) => {
                             />
                             <TextInput
                                 fullWidth={true}
-                                label={'Change Email'}
+                                label={'New Password'}
                                 multiline={false}
                                 onChange={inputNewPass}
                                 required={false}
