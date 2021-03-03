@@ -84,7 +84,6 @@ const LikeSwitch = (props) => {
         if (checked) {
             dispatch(likePost(userID, symbol));
         } else if (!checked) {
-            console.log('done');
             dispatch(likeDelete(userID, likeID, symbol));
         }
     };

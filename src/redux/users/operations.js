@@ -325,7 +325,7 @@ export const fetchUsersLikes = (userID) => {
 export const likePost = (userID, symbol) => {
     return async (dispatch) => {
         try {
-            await httpClient.post(`users/${userID}/likes`, {
+            await httpClient.post(`/users/${userID}/likes`, {
                 symbol: symbol,
             });
             dispatch(
@@ -348,7 +348,7 @@ export const likePost = (userID, symbol) => {
 export const likeDelete = (userID, likeID, symbol) => {
     return async (dispatch) => {
         try {
-            await httpClient.delete(`users/${userID}/likes/${likeID}`);
+            await httpClient.delete(`/users/${userID}/likes/${likeID}`);
             dispatch(
                 alertOpenAction({
                     alert: {
