@@ -64,6 +64,7 @@ const Header = () => {
                     {isSignedIn ? (
                         <>
                             <IconButton
+                                style={{ marginLeft: 'auto' }}
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
