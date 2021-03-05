@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/index.css';
-import { CustomizedSnackbar } from './components/UiKits';
+import { CustomizedSnackbar, ScrollToTop } from './components/UiKits';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { getUserID } from './redux/users/selectors';
 import Header from './components/Header/Header';
-import Main from './components/Main/Main';
+import Router from './Router';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { fetchUsersLikes, listenAuthState } from './redux/users/operations';
 
@@ -31,9 +31,10 @@ const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
+            <ScrollToTop />
             <CustomizedSnackbar />
             <Header />
-            <Main />
+            <Router />
         </ThemeProvider>
     );
 };

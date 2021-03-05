@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSignedIn, getUserName } from '../../redux/users/selectors';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { AppBar, Button, Divider } from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -12,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Title from '../../assets/img/Index_logo.svg';
 import { SignInModalForm, SignUpModalForm, DeleteUserModalForm, UpdateModalForm } from '../Users/index';
+import { push } from 'connected-react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,60 +51,74 @@ const Header = () => {
         <div className={classes.root}>
             <AppBar position="static" color="default">
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title} color="primary">
-                        <img src={Title} alt="title img" />
-                    </Typography>
-                    <div>
-                        {isSignedIn ? (
-                            <>
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    onClick={handleMenu}
-                                    color="primary"
-                                >
-                                    <AccountCircle />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem disabled>{userName}</MenuItem>
-                                    <Divider />
-                                    <MenuItem onClick={handleClose}>
-                                        <span onClick={() => dispatch(signOut())}>Sign Out</span>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                        <UpdateModalForm text={'Update User'} />
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                        <DeleteUserModalForm text={'Delete User'} />
-                                    </MenuItem>
-                                </Menu>
-                            </>
-                        ) : (
-                            <div style={{ display: 'flex' }}>
-                                <Button>
-                                    <SignInModalForm text={'Sign In'} />
-                                </Button>
-                                <Button variant="contained" color="primary" style={{ marginLeft: 10 }}>
-                                    <SignUpModalForm text={'Sign Up'} />
-                                </Button>
-                            </div>
-                        )}
-                    </div>
+                    <Button>
+                        <Typography
+                            variant="h6"
+                            className={classes.title}
+                            color="primary"
+                            onClick={() => dispatch(push('/'))}
+                        >
+                            <img src={Title} alt="title img" />
+                        </Typography>
+                    </Button>
+                    {isSignedIn ? (
+                        <>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="primary"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                <MenuItem disabled>{userName}</MenuItem>
+                                <Divider />
+                                <MenuItem onClick={handleClose}>
+                                    <span onClick={() => dispatch(signOut())}>Sign Out</span>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <UpdateModalForm text={'Update User'} />
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <DeleteUserModalForm text={'Delete User'} />
+                                </MenuItem>
+                            </Menu>
+                        </>
+                    ) : (
+                        <div style={{ display: 'flex' }}>
+                            <Button>
+                                <SignInModalForm text={'Sign In'} />
+                            </Button>
+                            <Button variant="contained" color="primary" style={{ marginLeft: 10 }}>
+                                <SignUpModalForm text={'Sign Up'} />
+                            </Button>
+                        </div>
+                    )}
+                    <IconButton
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={() => dispatch(push('/help'))}
+                        color="primary"
+                    >
+                        <HelpIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </div>
