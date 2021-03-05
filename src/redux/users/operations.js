@@ -176,6 +176,16 @@ export const signUp = (username, email, password, confirmPassword) => {
                         },
                     })
                 );
+            } else if (error.response.status == 400) {
+                dispatch(
+                    alertOpenAction({
+                        alert: {
+                            isOpen: true,
+                            type: 'error',
+                            message: 'Eメールの値が不正です。 入力し直して下さい。',
+                        },
+                    })
+                );
             }
             return;
         }
